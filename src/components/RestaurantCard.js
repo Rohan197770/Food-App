@@ -26,6 +26,7 @@ deliveryTime,address,veg}=resData?.data;
         <h4>{deliveryTime} minutes</h4>
         <h4>{address}</h4>
         <h4>{{veg}==true}</h4>
+
         </div>
     )
 }
