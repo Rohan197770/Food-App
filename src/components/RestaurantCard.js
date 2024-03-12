@@ -10,22 +10,20 @@ const RestaurantCard =(props)=>
     avgRating,
 cuisines,
 costForTwo,
-deliveryTime,address,veg}=resData?.data;
+sla,areaName,veg}=resData?.info;
     
     return (
         <div className="res-card" style={{backgroundColor:"#f0f0f0"}}>
-            <img  className="res-logo" alt="res-logo" src={CDN_URL
-           +
-          resData.data.cloudinaryImageId
+            <img  className="res-logo" alt="res-logo" src={CDN_URL+cloudinaryImageId
         }/>
         <h3>{name}</h3>
         {/* //resData.data.name(we can also write in this form) */}
         <h4>{cuisines.join(", ")}</h4>
         <h4>{avgRating} stars</h4>
-        <h4>{costForTwo/100} FOR TWO</h4>
-        <h4>{deliveryTime} minutes</h4>
-        <h4>{address}</h4>
-        <h4>{{veg}==true}</h4>
+        <h4>{costForTwo}</h4>
+        <h4>{sla?.slaString}</h4>
+        <h4>{areaName}</h4>
+        <h4>{veg}</h4>
 
         </div>
     )
