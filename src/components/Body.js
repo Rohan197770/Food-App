@@ -2,6 +2,7 @@ import RestaurantCard from "./RestaurantCard";
 import resList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 const Body = () => {
   //local state variable -Super powerful variable
   const [listOfRestaurants, setlistOfRestaurants] = useState([]);
@@ -14,14 +15,14 @@ const Body = () => {
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.2446059&lng=77.47296899999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
 
     // console.log(json);
-    console.log(
-      json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
-    );
+    // console.log(
+    //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    // );
     //optional chaning
     setlistOfRestaurants(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -37,7 +38,7 @@ const Body = () => {
   //     return <Shimmer/>;
   // }
   // we can write the same if condition as ternary opertaor
-  return filteredRestaurent.length == 0 ? (
+  return listOfRestaurants.length == 0 ? (
     <Shimmer />
   ) : (
     <div className="Body">
@@ -79,7 +80,13 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestaurent.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          <Link
+            className="res-list"
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            <RestaurantCard resData={restaurant} />
+          </Link>
         ))}
 
         {/* <RestaurantCard

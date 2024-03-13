@@ -19,6 +19,7 @@
   margin: 5px;
   padding: 5px;
   width: 250px;
+  
   /* heiht: 300px; */
 }
 .res-card:hover {
@@ -56,4 +57,8 @@
 }
 .filter {
   display: flex;
+}
+.res-list
+{
+  text-decoration: none;
 }
