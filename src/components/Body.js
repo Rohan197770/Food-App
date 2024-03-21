@@ -1,8 +1,8 @@
 import RestaurantCard from "./RestaurantCard";
-import resList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Body = () => {
   //local state variable -Super powerful variable
   const [listOfRestaurants, setlistOfRestaurants] = useState([]);
@@ -19,10 +19,6 @@ const Body = () => {
     );
     const json = await data.json();
 
-    // console.log(json);
-    // console.log(
-    //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    // );
     //optional chaning
     setlistOfRestaurants(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
@@ -31,13 +27,13 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
-  //Conditional Rendering
-  // if(listOfRestaurants.length==0)
-  // {
-  //     // return <h1>Loading....</h1>
-  //     return <Shimmer/>;
-  // }
-  // we can write the same if condition as ternary opertaor
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus == false)
+    return (
+      <h1>Looks Like youre offline!! Please check your Internet Connection</h1>
+    );
+
   return listOfRestaurants.length == 0 ? (
     <Shimmer />
   ) : (
