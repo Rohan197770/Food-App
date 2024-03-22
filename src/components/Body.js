@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withVegLabel } from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -8,7 +8,10 @@ const Body = () => {
   const [listOfRestaurants, setlistOfRestaurants] = useState([]);
   //we are making another copy beacause we have to search on the all restaurant card
   const [filteredRestaurent, setfilteredRestaurent] = useState([]);
+
   const [searchText, setsearchText] = useState("");
+
+  const RestaurantCardVeg= withVegLabel(RestaurantCard);
   useEffect(() => {
     fetchData();
   }, []);
@@ -18,6 +21,7 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.2599333&lng=77.412615&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
+    
 
     //optional chaning
     setlistOfRestaurants(
@@ -83,7 +87,10 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {
+               restaurant.info.veg?<RestaurantCardVeg resData={restaurant}/>:<RestaurantCard resData={restaurant}/>
+            }
+            
           </Link>
         ))}
 

@@ -32,4 +32,21 @@ const RestaurantCard = (props) => {
     </div>
   );
 };
+//Higher Order Component 
+
+// input-RestaurantCard =>RestaurantCardVeg
+export const withVegLabel=(RestaurantCard)=>
+{
+  return(props)=>
+  {
+    return(
+      <div>
+      <label className="p-2 m-4 absolute rounded-lg bg-green-100 ">Pure Veg🍃</label>
+      <RestaurantCard {...props}/>
+      {/* spread operator ...props it will automatically pass all the props we are recieving */}
+      </div>
+      
+    );
+  };
+};
 export default RestaurantCard;
