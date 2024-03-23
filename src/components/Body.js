@@ -1,8 +1,9 @@
 import RestaurantCard, { withVegLabel } from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Body = () => {
   //local state variable -Super powerful variable
   const [listOfRestaurants, setlistOfRestaurants] = useState([]);
@@ -11,7 +12,9 @@ const Body = () => {
 
   const [searchText, setsearchText] = useState("");
 
-  const RestaurantCardVeg= withVegLabel(RestaurantCard);
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
+  const RestaurantCardVeg = withVegLabel(RestaurantCard);
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,7 +24,6 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.2599333&lng=77.412615&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
-    
 
     //optional chaning
     setlistOfRestaurants(
@@ -46,13 +48,14 @@ const Body = () => {
         <div className="search m-4 p-4">
           <input
             type="text"
-            className="border border-solid border-black rounded-sm"
+            className="border border-solid border-black rounded-sm p-1"
             value={searchText}
             onChange={(e) => {
               setsearchText(e.target.value);
             }}
           />
-          <button className="px-4 py-2 bg-green-100 m-4 rounded-lg "
+          <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg "
             onClick={() => {
               // filter the restaurant card and update the UI
 
@@ -67,17 +70,25 @@ const Body = () => {
           </button>
         </div>
         <div className="search m-4 p-4 flex items-center">
-        <button
-          className="px-4 py-2 bg-gray-100 rounded-lg"
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setfilteredRestaurent(filteredList); // we have change the setfilteredRestaurent beacuse we are printing that restaurant
-          }}
-        >
-          Top Rated Restaurants{" "}
-        </button>
+          <button
+            className="px-4 py-2 bg-gray-100 rounded-lg"
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter(
+                (res) => res.info.avgRating > 4
+              );
+              setfilteredRestaurent(filteredList); // we have change the setfilteredRestaurent beacuse we are printing that restaurant
+            }}
+          >
+            Top Rated Restaurants{" "}
+          </button>
+        </div>
+        <div className="search m-4 p-4 flex items-center">
+          <label className="text-lg p-2">UserName:</label>
+          <input
+            className="border border-black p-1"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
       </div>
       <div className="flex flex-wrap">
@@ -87,10 +98,11 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            {
-               restaurant.info.veg?<RestaurantCardVeg resData={restaurant}/>:<RestaurantCard resData={restaurant}/>
-            }
-            
+            {restaurant.info.veg ? (
+              <RestaurantCardVeg resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
 

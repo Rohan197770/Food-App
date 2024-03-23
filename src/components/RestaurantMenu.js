@@ -11,6 +11,8 @@ const RestaurantMenu = () => {
 
   const resInfo = useRestaurantMenu(resId);
 
+  const [showIndex, setShowIndex] = useState(null);
+
   if (resInfo == null) {
     return <Shimmer />;
   }
@@ -36,8 +38,16 @@ const RestaurantMenu = () => {
       <p className="font-bold text-lg">
         {cuisines.join(",")} -{costForTwoMessage}
       </p>
-      {categories.map((category) => (
-        <RestaurantCategory key={category?.card?.card.title} data={category?.card?.card}/>
+      {/* categories accordians */}
+
+      {categories.map((category, index) => (
+        //controlled component
+        <RestaurantCategory
+          key={category?.card?.card.title}
+          data={category?.card?.card}
+          showItems={index == showIndex ? true : false}
+          setShowIndex={() => setShowIndex(index)}
+        />
       ))}
     </div>
   );
