@@ -34,7 +34,7 @@ const AppLayout = () => {
   return (
     <Provider store={appStore}>
       <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        <div className="app">
+        <div className="app" >
           {/* thats how our header componet will be stick and which the outlet rest will be change as per path */}
           <Header />
           <Outlet />
