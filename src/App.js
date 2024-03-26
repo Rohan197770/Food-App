@@ -9,6 +9,9 @@ import Error from "./components/Error";
 import { Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 // import Grocery from "./components/Grocery";
 //chuncking
 //code splitting
@@ -20,23 +23,24 @@ const Grocery = lazy(() => import("./components/Grocery"));
 // not suing keys(not acceptable) <<<< index as a key <<<<<<<<<<<<<< unique id(best practice)
 
 const AppLayout = () => {
-  const [userName,setUserName]=useState();
+  const [userName, setUserName] = useState();
 
-  useEffect(()=>
-  {
-     const data= {
-      name:"Rohan Anand"
-     }
-     setUserName(data.name)
-  },[])
+  useEffect(() => {
+    const data = {
+      name: "Rohan Anand",
+    };
+    setUserName(data.name);
+  }, []);
   return (
-    <UserContext.Provider value={{loggedInUser :userName ,setUserName}}>
-    <div className="app">
-      {/* thats how our header componet will be stick and which the outlet rest will be change as per path */}
-      <Header />
-      <Outlet />
-    </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        <div className="app">
+          {/* thats how our header componet will be stick and which the outlet rest will be change as per path */}
+          <Header />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -65,8 +69,12 @@ const appRouter = createBrowserRouter([
         ),
       },
       {
-        path: "restaurants/:resId",
+        path: "/restaurants/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,
