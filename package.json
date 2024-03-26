@@ -1,5 +1,6 @@
 {
-  "name": "y",
+  "homepage":"http://rohan197770.github.io/Namaste-React",
+  "name": "food-app",
   "version": "1.0.0",
   "description": "This is Namaste react by rohan anand",
   "scripts": {
@@ -7,7 +8,7 @@
     "build": "parcel build index.html",
     "test": "jest",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/Rohan197770/Namaste-React/issues"
   },
-  "homepage": "https://rohan197770.github.io/Namaste-React/",
+  
   "devDependencies": {
     "gh-pages": "^6.1.1",
     "parcel": "^2.11.0",
